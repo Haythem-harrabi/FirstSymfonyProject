@@ -23,4 +23,10 @@ class HomeController extends AbstractController
     {
         return new Response('<h1> Bonjour mes étudiants </h1>');
     }
+
+    #[Route ('/msg', name: 'msg')]
+    public function showmsg():  Response
+    {
+        return $this->render('home/msg.html.twig');
+    }
 }

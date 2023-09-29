@@ -18,7 +18,7 @@ class ServiceController extends AbstractController
 
 
 
-    //Methode showService()
+    //Methode showService() route paramétré
     #[Route('/service/show/{name}', name: 'app_show_service')]
     public function showService($name): Response
     {
