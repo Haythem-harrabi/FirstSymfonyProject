@@ -1,5 +1,26 @@
 <h1> Bonjour {{name}}</h1>
 
+
+{% if tableau is empty%}
+<h1>  Tableau vide  </h1>
+{% else %}
+{% set sommeLivres = 0 %}
 {% for author in tableau %}
-    {{ author.username }}
+{% if author.nb_books>0 %}
+{% set sommeLivres = sommeLivres + author.nb_books %}
+    <img src='{{author.picture}}'/> 
+    {{ author.username | upper }} <button> Buy </button> 
+    {# <a href={{path('d',{'id' :author.username})}}> details </a> <br> #}
+      <a href={{path('d',{'username' :author.username})}}> details </a> <br>
+{%else%}
+ <img src='{{author.picture}}'/> 
+  {{ author.username | upper }}  {#afficher les noms en majuscule #}
+  {# <a href={{path('d',{'id':author.username})}}> details </a> <br> #}
+ <a href={{path('d',{'username' :author.username})}}> details </a> <br>
+{% endif %}
 {% endfor %}
+
+<h2> Le nombre total des livres = {{sommeLivres}} </h2>
+{% endif %}
+
+{{dump(tableau)}}
