@@ -1,8 +1,10 @@
+
+<link rel="stylesheet" href="{{ asset('css/studentfetch.css') }}" />
 <table>
-<tr> <th> Nom </th> <th> Age </th> <th> Action </th> </tr>
+<tr> <th> ID</th> <th> Nom </th> <th> Age </th> <th> Classroom </th> <th> Action </th> </tr>
 {% for t in response %}
 <tr>
-<td>{{t.nom}} </td> <td>{{t.age}} </td><td><a href={{ path('updateF',  {'id' : t.id}) }}> Update </a> <a href={{ path('remove',  {'id' : t.id}) }}> Delete </a></td>
+<td>{{t.id}} </td><td>{{t.nom}} </td> <td>{{t.age}} </td><td>{{t.classroom}} </td><td><a href={{ path('updateF',  {'id' : t.id}) }}> <button>Update</button></a> <a href={{ path('remove',  {'id' : t.id}) }}><button> Delete </button></a></td>
 </tr>
 {% endfor %}
 </table>
