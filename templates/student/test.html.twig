@@ -1,0 +1,10 @@
+<table>
+<tr> <th> Nom </th> <th> Age </th> <th> Action </th> </tr>
+{% for t in response %}
+<tr>
+<td>{{t.nom}} </td> <td>{{t.age}} </td><td><a href={{ path('updateF',  {'id' : t.id}) }}> Update </a> <a href={{ path('remove',  {'id' : t.id}) }}> Delete </a></td>
+</tr>
+{% endfor %}
+</table>
+
+<a href={{ path('addF') }}><button> Add </button> </a>
