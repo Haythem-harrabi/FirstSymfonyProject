@@ -6,6 +6,7 @@ use App\Entity\Student;
 use App\Form\StudentType;
 use App\Repository\ClassroomRepository;
 use App\Repository\StudentRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Doctrine\Persistence\ManagerRegistry;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -33,6 +34,15 @@ class StudentController extends AbstractController
         ]);
     }
 
+    #[Route('/fetch2', name:'fetch2')]
+    public function fetch2(\Doctrine\Persistence\ManagerRegistry $mr): Response
+    {
+        $repo=$mr->getRepository(Student::class);
+        $r=$repo->findAll();
+        return $this->render('student/test.html.twig', [
+            'response' => $r,
+        ]);
+    }
 
     
     #[Route('/add', name:'add')]
@@ -119,6 +129,43 @@ class StudentController extends AbstractController
     }
 
 
+    //DQL
+    #[Route('/dql', name:'dql')]
+    public function dqlStudent(EntityManagerInterface $em, Request $request, StudentRepository $repo): Response{
+        $result=$repo->findAll();
+    //     $req= $em->createQuery(" select s.nom from App\Entity\Student s where s.nom=:n");
+    // //select * from student
+    // if ($request->isMethod("post")){
+    // $value=$request->get('test') ;   
+    // $req->setParameter('n',$value);
+    // $result=$req->getResult();
+    // }
+    if ($request->isMethod('post')){
+        $value=$request->get('test') ; 
+        $result=$repo->fetchStudentByName($value);
+        // dd($result);
+    }
+    
+        // dd($result);
+        return $this->render('student/searchStudent.html.twig', [
+            'r'=>$result]);
+
+    }
+
+    #[Route('/dql2', name:'dql2')]
+    public function dql2(EntityManagerInterface $em): Response{
+        // $req=$em->createQuery("select count(s) from App\Entity\Student s");
+        // $req=$em->createQuery("select s.nom from App\Entity\Student s ORDER BY s.nom ASC");
+        $req=$em->createQuery("select s.nom from App\Entity\Student s join s.classroom c where c.name='3A39'");
+        $result=$req->getResult();
+        dd($result);
+
+    }
+
+    #[Route("/listqb", name:"listqb")]
+    public function qb(StudentRepository $repo) : Response{
+        $result=$repo->listQB();
+        dd($result);}
 
 
 }

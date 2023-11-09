@@ -1,0 +1,10 @@
+<form method="POST" action="/dql">
+<label> Search by name </label>
+<input type="text" name="test"/>
+<input type="submit" value="search">
+</form>
+
+{% for s in r %}
+<h1> Student </h1>
+ {{ s.nom }} 
+{% endfor %}

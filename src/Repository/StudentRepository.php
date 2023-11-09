@@ -45,4 +45,27 @@ class StudentRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+//dql
+public function fetchStudentByName($name) {
+    $em=$this->getEntityManager ();
+    $req=$em->createQuery("select s.nom from App\Entity\Student s where s.nom=:n");
+    $req->setParameter("n", $name);
+    $result=$req->getResult();
+    return $result;
+
+}
+
+//QueryBuilder
+public function listQB() {
+$req=$this->createQueryBuilder('s')
+->select ('s.nom')
+->join ('s.classroom','c')
+->addSelect('c.name as classroom')
+->where("c.name='3A39'");
+$preresult=$req->getQuery();
+$result=$preresult->getResult();
+return $result;
+
+}
 }
